@@ -31,6 +31,7 @@ class ProductController extends Controller
         return ProductResource::collection($products);
     }
 
+
     public function show($id)
     {
         $product = Product::with('images')->findOrFail($id);
@@ -38,6 +39,8 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
+
+    
     public function bestSellers()
     {
         $products = Product::with('images')->where('is_best_seller', true)->get();

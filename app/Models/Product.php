@@ -20,7 +20,6 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'features' => 'array',
         'is_best_seller' => 'boolean',
     ];
 

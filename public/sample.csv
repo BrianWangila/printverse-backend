@@ -1,0 +1,5 @@
+title,price,description,category,is_best_seller,features,image_names
+"Clarity Refill Inks",140,"Clarity Refill Inks description...","inks",true,"Model: CLR-INK-100;Volume: 100ml;Compatible with HP, Canon, Epson;High-yield formula","clarity-main.jpg;clarity-2.jpg;clarity-3.jpg"
+"Hiipoo Sublimation Ink",155,"Hiipoo Sublimation Ink description...","inks",false,"Model: HIIPOO-SUB-200;Volume: 70ml;Compatible with Epson","hiipoo-main.jpg;hiipoo-2.jpg"
+"Clarity Refill Inks2",140,"Clarity Refill Inks description...","inks",true,"Model: CLR-INK-100;Volume: 100ml;Compatible with HP, Canon, Epson;High-yield formula","clarity-main.jpg;clarity-2.jpg;clarity-3.jpg"
+"Hiipoo Sublimation Ink2",155,"Hiipoo Sublimation Ink description...","inks",false,"Model: HIIPOO-SUB-200;Volume: 70ml;Compatible with Epson","hiipoo-main.jpg;hiipoo-2.jpg"

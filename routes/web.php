@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ProductImportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/import', [ProductImportController::class, 'showImportForm'])->name('admin.import.form');
+    Route::post('/import', [ProductImportController::class, 'import'])->name('admin.import');
 });

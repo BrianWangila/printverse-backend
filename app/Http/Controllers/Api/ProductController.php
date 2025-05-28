@@ -22,7 +22,9 @@ class ProductController extends Controller
                 return $q->where(function ($q) use ($query) {
                     $q->where('title', 'like', "%$query%")
                       ->orWhere('description', 'like', "%$query%")
-                      ->orWhere('features', 'like', "%$query%");
+                      ->orWhereHas('features', function ($q) use ($query) {
+                          $q->where('feature', 'like', "%$query%");
+                      });
                 });
             })
             ->get();
@@ -40,7 +42,7 @@ class ProductController extends Controller
     }
 
 
-    
+
     public function bestSellers()
     {
         $products = Product::with('images')->where('is_best_seller', true)->get();

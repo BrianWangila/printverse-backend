@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('description');
             $table->string('category');
             $table->boolean('is_best_seller')->default(false);
-            $table->json('features');
             $table->timestamps();
         });
     }

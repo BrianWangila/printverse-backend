@@ -16,10 +16,11 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'category' => $this->category,
             'isBestSeller' => $this->is_best_seller,
-            'features' => $this->features,
             'gallery' => $this->images->where('is_main', false)->pluck('image_path')->map(function ($path) {
                 return asset($path);
             })->toArray(),
+            'features' => $this->features->pluck('feature')->toArray(),
+            
         ];
     }
 }

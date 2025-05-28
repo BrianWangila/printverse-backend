@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductImage;
+use App\Models\ProductFeature;
 
 class Product extends Model
 {
@@ -16,7 +17,6 @@ class Product extends Model
         'description',
         'category',
         'is_best_seller',
-        'features',
     ];
 
     protected $casts = [
@@ -31,5 +31,10 @@ class Product extends Model
     public function mainImage()
     {
         return $this->images()->where('is_main', true)->first();
+    }
+
+    public function features()
+    {
+        return $this->hasMany(ProductFeature::class);
     }
 }

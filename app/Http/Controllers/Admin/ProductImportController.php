@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductFeature;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -54,13 +55,26 @@ class ProductImportController extends Controller
                 'description' => $record['description'],
                 'category' => $record['category'],
                 'is_best_seller' => $isBestSeller,
-                'features' => json_encode(explode(';', $record['features'])),
+                // 'features' => json_encode(explode(';', $record['features'])),
             ]);
 
             Log::info("Created product: {$product->title} (ID: {$product->id})");
 
+            // Process features
+            $features = array_map('trim', explode(';', $record['features']));
+            foreach ($features as $feature) {
+                if (!empty($feature)) {
+                    ProductFeature::create([
+                        'product_id' => $product->id,
+                        'feature' => $feature,
+                    ]);
+                    Log::info("Added feature '$feature' for product {$product->title}");
+                }
+            }
+
             $imageNames = array_map('trim', explode(';', $record['image_names']));
             $this->processImages($product, $imageNames, $uploadedFiles);
+
         } catch (\Exception $e) {
             Log::error("Error processing product {$record['title']}: " . $e->getMessage());
         }

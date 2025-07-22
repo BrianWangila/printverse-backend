@@ -23,7 +23,7 @@ class ProductImportController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'csv_file' => 'required|file|mimes:csv,txt',
+            'csv_file' => 'required|file|mimes:csv,txt,xls,xlsx',
             'images' => 'required|array',
             'images.*' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
@@ -46,6 +46,14 @@ class ProductImportController extends Controller
     private function processProductRecord(array $record, array $uploadedFiles)
     {
         try {
+
+            // Check if product with the same title already exists
+            $existingProduct = Product::where('title', $record['title'])->first();
+            if ($existingProduct) {
+                Log::info("Skipping duplicate product: {$record['title']} (ID: {$existingProduct->id})");
+                return;
+            }
+
             Log::info('Processing CSV record:', $record);
 
             $isBestSeller = strtolower($record['is_best_seller']) === 'true' || $record['is_best_seller'] == 1;
@@ -95,8 +103,8 @@ class ProductImportController extends Controller
             }
 
             try {
-                $relativePath = $file->store('images', 'public'); // Returns 'images/filename.jpg'
-                $fullPath = 'storage/' . $relativePath; // Prepend 'storage/' to match symlink structure
+                $relativePath = $file->store('images', 'public'); 
+                $fullPath = 'storage/' . $relativePath; 
                 Log::info("Stored image $imageName at: $fullPath for product {$product->title}");
 
                 ProductImage::create([
